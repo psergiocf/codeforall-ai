@@ -1,0 +1,5 @@
+[project]
+name = "codeforall_ai"
+version = "0.1.0"
+description = "Codeforall AI course project"
+authors = [{name = "Sérgio Freitas", email = "psergiocf@gmail.com"}]
