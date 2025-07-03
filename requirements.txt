@@ -7,3 +7,4 @@ langchain-core>=0.3.67
 langchain_community>=0.3.26
 pypdf>=5.7.0
 langchain-chroma>=0.1.2
+faiss-cpu
