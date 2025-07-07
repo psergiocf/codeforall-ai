@@ -8,7 +8,19 @@ python -m venv .venv
 source .venv/bin/activate
 
 # Install the packages defined on the 'requirements.txt' in the virtual environment
-pip install -r requirements.txt
+pip install -r [path_to_requirements_file]
+
+```
+
+# To run any of the examples
+
+pip install -r examples/requirements.txt
+
+# To run the main project dependencies
+
+pip install -r src/requirements.txt
+
+```
 
 # To check if the virtual environment is properly setup, check where the packages are installed
 pip list      # shows only packages in this environment
