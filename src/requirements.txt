@@ -4,3 +4,4 @@ jq>=1.9.1
 langchain_text_splitters>=0.1.2
 langchain_openai>=0.3.26
 langchain-chroma>=0.1.2
+langchain-openai>=0.3.26
