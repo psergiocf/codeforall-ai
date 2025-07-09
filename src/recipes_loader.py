@@ -13,15 +13,6 @@ def load_recipes():
     # Load the documents
     documents = loader.load()
     print(f"Loaded documents: {len(documents)}")
-    # print(f"Documents: {documents}")
-
-    # for document in documents:
-    #     page_content = json.loads(document.page_content)
-    #     doc_id = page_content.get('id')
-    #     print(f"Document: {document}")
-    #     print("---")
-    #     print(f"ID: {doc_id}")
-    #     print("---------------------------")
 
     return documents
 

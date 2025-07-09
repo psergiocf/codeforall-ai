@@ -16,7 +16,7 @@ def predict(message, history):
     chunks = chunk_recipes(recipes)
 
     # Embed the chunks and store them in a vector database
-    # vector_db = create_vector_db(chunks)
+    vector_db = create_vector_db(chunks)
 
 
 
@@ -24,49 +24,49 @@ def predict(message, history):
     ############# Phase 2: RAG Retrieval Augmentation ##############
     ################################################################
 
-    # user_query = message
+    user_query = message
 
-    # # Step 2.1 - Retrieve dos chunks mais relevantes
-    # # Custos
-    # relevant_chunks = vector_db.similarity_search(user_query, 3)
-    # print(relevant_chunks)
+    # Step 2.1 - Retrieve dos chunks mais relevantes
+    # Custos
+    relevant_chunks = vector_db.similarity_search(user_query, 3)
+    print(relevant_chunks)
 
-    # # Step 2.2 Create final prompt to send to LLM
-    # prompt = f"""
-    #     Instructions:
-    #     Answer the provided user query with the given context
-    #     Only answer questions that the answer is provided in the given context
-    #     If you don't know the answer, say 'I don't know'
+    # Step 2.2 Create final prompt to send to LLM
+    prompt = f"""
+        Instructions:
+        Answer the provided user query with the given context
+        Only answer questions that the answer is provided in the given context
+        If you don't know the answer, say 'I don't know'
 
-    #     User query:
-    #     {user_query}
+        User query:
+        {user_query}
 
-    #     Context:
-    #     {relevant_chunks}
-    # """
+        Context:
+        {relevant_chunks}
+    """
 
-    # # Step 2.3 Send the prompt to the LLM and get the final response
-    # llm = ChatOpenAI(
-    #     model="gpt-4o-mini",
-    #     temperature=0.6
-    # )
+    # Step 2.3 Send the prompt to the LLM and get the final response
+    llm = ChatOpenAI(
+        model="gpt-4o-mini",
+        temperature=0.6
+    )
 
-    # print(f"Prompt: {prompt}")
+    print(f"Prompt: {prompt}")
 
-    # # 3 Roles
-    # # system/developer - Instruir toda a conversa
-    # # assistant/ai - resposta da LLM
-    # # human/user - message do utilizador
-    # messages = [
-    #     ("human", prompt),
-    # ]
+    # 3 Roles
+    # system/developer - Instruir toda a conversa
+    # assistant/ai - resposta da LLM
+    # human/user - message do utilizador
+    messages = [
+        ("human", prompt),
+    ]
 
-    # response = llm.invoke(messages)
-    # print(response)
+    response = llm.invoke(messages)
+    print(response)
 
-    # return response.content
+    return response.content
 
-    return "Hi Sérgio, I'm the Head Chef AI!"
+    # return "Hi Sérgio, I'm the Head Chef AI!"
 
 # Load the information and prepare the RAG
 # vector_db = load_information()

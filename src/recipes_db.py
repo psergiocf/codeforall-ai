@@ -22,7 +22,6 @@ def generate_vector_db(embedding_model):
 def create_vector_db(chunks):
     embedding_model = generate_embedding_model()
     vector_db = generate_vector_db(embedding_model)
-    print(f"All chunks: {chunks}")
 
     # Don't forget that this is where the embedding happens, the vectors are stored and there are associated costs
     vector_db.add_documents(chunks)
