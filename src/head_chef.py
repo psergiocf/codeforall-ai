@@ -31,7 +31,7 @@ def predict(query, history):
     return query_llm(query, relevant_chunks)
 
 
-# Load the information and prepare the RAG
-# prepare_rag()
+# Load the recipes and prepare RAG with the required chunks
+prepare_rag()
 
 gr.ChatInterface(predict, type="messages").launch(debug=True)
