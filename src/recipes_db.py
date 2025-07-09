@@ -23,7 +23,7 @@ def create_vector_db():
 
 # Add documents to the vector database
 def add_documents_to_vector_db(vector_db, chunks):
-    # Don't forget that this is where the embedding happens, the vectors are stored and there are associated costs
+    # This is where the embedding happens, the vectors are stored and there are associated costs
     vector_db.add_documents(chunks)
 
     print(f"Vector DB: {vector_db}")

@@ -1,4 +1,3 @@
-# import json
 from langchain_community.document_loaders import JSONLoader
 
 # Load the recipes from the JSON files
@@ -12,7 +11,6 @@ def load_recipes():
 
     # Load the documents
     documents = loader.load()
-    print(f"Loaded documents: {len(documents)}")
 
     return documents
 
