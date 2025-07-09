@@ -28,8 +28,6 @@ def add_documents_to_vector_db(vector_db, chunks):
 
     print(f"Vector DB: {vector_db}")
 
-    return vector_db
-
 # Retrieve relevant chunks based on user query
 def get_relevant_chunks(vector_db, user_query, top_k=3):
     distance_threshold = 1.5
