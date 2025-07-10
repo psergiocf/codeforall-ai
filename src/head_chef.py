@@ -1,7 +1,7 @@
 import gradio as gr
 from llm import query_llm
 from recipes_loader import load_recipes
-from recipes_chunker import chunk_recipes
+from recipes_chunker import chunk_recipes, update_recipes_metadata
 from recipes_db import create_vector_db, add_documents_to_vector_db, get_relevant_chunks
 
 
@@ -18,9 +18,12 @@ def prepare_rag():
     # Transform recipes into chunks
     # Important Note: This step is not needed because load_recipes() uses JSONLoader, which automatically generates a document per JSON object.
     # chunks = chunk_recipes(recipes)
+    
+    # Retrieve new recipe documents with updated metadata
+    updated_recipes = update_recipes_metadata(recipes)
 
     # Embed the chunks and store them in a vector database
-    add_documents_to_vector_db(vector_db, recipes)
+    add_documents_to_vector_db(vector_db, updated_recipes)
 
 
 ################################################################

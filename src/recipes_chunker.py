@@ -35,71 +35,57 @@ def create_recipe_document(recipe):
         }
     )
 
-# Formats a recipe from JSON to text
-def format_recipe(recipe):
-    parts = []
+# Returns an object with the recipe"s filtering data
+def prepare_recipe_metadata(recipe):
+    filter = {}
 
     if "id" in recipe:
-        parts.append(f"Id: {recipe['id']}")
-
-    if "url" in recipe:
-        parts.append(f"URL: {recipe['url']}")
-
-    if "image" in recipe:
-        parts.append(f"Image: {recipe['image']}")
+        filter["id"] = recipe["id"]
 
     if "name" in recipe:
-        parts.append(f"Recipe: {recipe['name']}")
-
-    if "description" in recipe:
-        parts.append(f"Description: {recipe['description']}")
+        filter["name"] = recipe["name"]
 
     if "author" in recipe:
-        parts.append(f"Author: {recipe['author']}")
+        filter["author"] = recipe["author"]
 
     if "rattings" in recipe:
-        parts.append(f"Rating: {recipe['rattings']}")
+        filter["rating"] = recipe["rattings"]
 
     if "ingredients" in recipe:
-        parts.append("Ingredients:")
-        for ingredient in recipe["ingredients"]:
-            parts.append(f"- {ingredient}")
+        filter["ingredients"] = "|".join(recipe["ingredients"])
 
-    if "steps" in recipe:
-        parts.append("Steps:")
-        for step in recipe["steps"]:
-            parts.append(f"- {step}")
+    if "nutrients" in recipe and "kcal" in recipe["nutrients"]:
+        filter["calories"] = recipe["nutrients"]["kcal"]
 
-    if "nutrients" in recipe:
-        parts.append("Nutrients:")
-        nutrients = recipe["nutrients"]
-
-        for key, value in nutrients.items():
-            parts.append(f"- {key}: {value}")
-
-    if "times" in recipe:
-        parts.append("Times:")
-        times = recipe["times"]
-
-        for key, value in times.items():
-            parts.append(f"- {key}: {value}")
+    if "nutrients" in recipe and "protein" in recipe["nutrients"]:
+        filter["protein"] = recipe["nutrients"]["protein"]
 
     if "serves" in recipe:
-        parts.append(f"Serves: {recipe['serves']}")
+        filter["serves"] = recipe["serves"]
 
     if "difficult" in recipe:
-        parts.append(f"Difficulty: {recipe['difficult']}")
-
-    if "vote_count" in recipe:
-        parts.append(f"Voting: {recipe['vote_count']}")
+        filter["difficulty"] = recipe["difficult"]
 
     if "subcategory" in recipe:
-        parts.append(f"Subcategory: {recipe['subcategory']}")
+        filter["subcategory"] = recipe["subcategory"]
 
-    if "dish_type" in recipe:
-        parts.append(f"Dish Type: {recipe['dish_type']}")
+    return filter
 
-    if "maincategory" in recipe:
-        parts.append(f"Main Category: {recipe['maincategory']}")
-    
-    return "\n".join(parts)
+# Return new recipes documents with updated metadata
+def update_recipes_metadata(recipes):
+    new_recipes = []
+
+    for recipe in recipes:
+        metadata = prepare_recipe_metadata(json.loads(recipe.page_content))
+
+        new_recipes.append(
+            Document(
+                page_content=recipe.page_content,
+                metadata={
+                    **recipe.metadata,
+                    **metadata
+                }
+            )
+        )
+
+    return new_recipes
