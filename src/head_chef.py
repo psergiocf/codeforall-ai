@@ -16,17 +16,18 @@ def prepare_rag():
     recipes = load_recipes()
 
     # Transform recipes into chunks
-    chunks = chunk_recipes(recipes)
+    # Important Note: This step is not needed because load_recipes() uses JSONLoader, which automatically generates a document per JSON object.
+    # chunks = chunk_recipes(recipes)
 
     # Embed the chunks and store them in a vector database
-    add_documents_to_vector_db(vector_db, chunks)
+    add_documents_to_vector_db(vector_db, recipes)
 
 
 ################################################################
 ############# Phase 2: RAG Retrieval Augmentation ##############
 ################################################################
 def predict(query, history):
-    relevant_chunks = get_relevant_chunks(vector_db, query, 3)
+    relevant_chunks = get_relevant_chunks(vector_db, query)
 
     return query_llm(query, relevant_chunks)
 

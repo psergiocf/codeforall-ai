@@ -22,14 +22,14 @@ def create_vector_db():
     return vector_db
 
 # Add documents to the vector database
-def add_documents_to_vector_db(vector_db, chunks):
+def add_documents_to_vector_db(vector_db, recipes):
     # Only add documents if the vector database is empty
     if vector_db._collection.count() > 0:
-        print("Vector DB already has documents, skipping embedding.")
+        print("⚠️  Vector DB already has recipes, skipping embedding.")
         return
 
     # This is where the embedding happens, the vectors are stored and there are associated costs
-    vector_db.add_documents(chunks)
+    vector_db.add_documents(recipes)
 
     print(f"Vector DB: {vector_db}")
 
