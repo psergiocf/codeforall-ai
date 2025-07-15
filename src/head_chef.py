@@ -1,5 +1,5 @@
 import gradio as gr
-from llm import query_llm
+from llm import generate_multiple_queries, query_llm, split_user_query_into_queries
 from recipes_loader import load_recipes
 from recipes_chunker import update_recipes_data
 from recipes_db import create_vector_db, add_documents_to_vector_db, get_relevant_chunks
@@ -29,7 +29,13 @@ def ingestion_stage():
 ############# Phase 2: RAG Retrieval Augmentation ##############
 ################################################################
 def inference_stage(query, history):
-    relevant_chunks = get_relevant_chunks(vector_db, query)
+    splitted_user_query = split_user_query_into_queries(query)
+    generated_queries = generate_multiple_queries(splitted_user_query)
+
+    print(f"Splitted queries: {splitted_user_query}\n")
+    print(f"Generated queries: {generated_queries}\n")
+
+    relevant_chunks = get_relevant_chunks(vector_db, generated_queries)
 
     return query_llm(query, relevant_chunks)
 

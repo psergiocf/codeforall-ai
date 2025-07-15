@@ -29,13 +29,15 @@ def add_documents_to_vector_db(vector_db, recipes):
     print(f"Vector DB: {vector_db}")
 
 # Retrieve relevant chunks based on user query
-def get_relevant_chunks(vector_db, user_query, top_k=3):
+def get_relevant_chunks(vector_db, queries, top_k=3):
     distance_threshold = 1.5
     relevant_chunks = ""
-    chunks = vector_db.similarity_search_with_score(user_query, top_k)
 
-    for chunk in chunks:
-        if chunk[1] < distance_threshold:
-            relevant_chunks = relevant_chunks + "\n" + chunk[0].page_content
+    for query in queries:
+        chunks = vector_db.similarity_search_with_score(query, top_k)
+
+        for chunk in chunks:
+            if chunk[1] < distance_threshold:
+                relevant_chunks = relevant_chunks + "\n" + chunk[0].page_content
 
     return relevant_chunks
