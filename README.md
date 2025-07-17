@@ -12,11 +12,11 @@ pip install -r [path_to_requirements_file]
 
 ```
 
-# To run any of the examples
+# Install the examples dependencies
 
 pip install -r examples/requirements.txt
 
-# To run the main project dependencies
+# Install the course project dependencies
 
 pip install -r src/requirements.txt
 

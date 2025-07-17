@@ -12,6 +12,8 @@ llm_transformation = ChatOpenAI(
     temperature=0.8
 )
 
+llm_bind_json = llm_transformation.bind(response_format={"type": "json_object"})
+
 default_system_prompt = f"""
     Instructions:
     Answer the provided user query.
@@ -29,6 +31,7 @@ def split_user_query_into_queries(user_query):
     split_user_query_prompt = f"""
         Instruction:
         Deconstruct the provided user query into simple queries.
+        If the user query is already simple, return it as is.
 
         User Query:
         {user_query}
@@ -39,7 +42,6 @@ def split_user_query_into_queries(user_query):
         }}
     """
 
-    llm_bind_json = llm_transformation.bind(response_format={"type": "json_object"})
     splitted_queries = llm_bind_json.invoke(split_user_query_prompt).content
 
     return json.loads(splitted_queries).get("queries")
@@ -49,7 +51,7 @@ def generate_multiple_queries(queries):
     multiple_queries_prompt = f"""
         Instructions:
         The user query is an array of queries.
-        Generate 5 different related queries for each item in the user query array.
+        Generate 3 different related queries for each item in the user query array.
         Ensure that each generated query has a question mark at the end.
         All the generated queries should be added into a single array.
 
@@ -62,7 +64,6 @@ def generate_multiple_queries(queries):
         }}
     """
 
-    llm_bind_json = llm_transformation.bind(response_format={"type": "json_object"})
     generated_queries = llm_bind_json.invoke(multiple_queries_prompt).content
 
     return json.loads(generated_queries).get("queries")
