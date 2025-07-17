@@ -3,6 +3,11 @@ from langchain_openai import ChatOpenAI
 import json
 
 llm = ChatOpenAI(
+    model="gpt-4o",
+    temperature=0.6
+)
+
+llm_transformation = ChatOpenAI(
     model="gpt-4.1-nano",
     temperature=0.8
 )
@@ -34,7 +39,7 @@ def split_user_query_into_queries(user_query):
         }}
     """
 
-    llm_bind_json = llm.bind(response_format={"type": "json_object"})
+    llm_bind_json = llm_transformation.bind(response_format={"type": "json_object"})
     splitted_queries = llm_bind_json.invoke(split_user_query_prompt).content
 
     return json.loads(splitted_queries).get("queries")
@@ -57,7 +62,7 @@ def generate_multiple_queries(queries):
         }}
     """
 
-    llm_bind_json = llm.bind(response_format={"type": "json_object"})
+    llm_bind_json = llm_transformation.bind(response_format={"type": "json_object"})
     generated_queries = llm_bind_json.invoke(multiple_queries_prompt).content
 
     return json.loads(generated_queries).get("queries")
