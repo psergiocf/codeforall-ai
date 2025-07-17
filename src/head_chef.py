@@ -18,6 +18,8 @@ def ingestion_stage():
     # Load recipes from JSON file
     recipes = load_recipes()
 
+    # Since the loaded recipes are automatically returned as documents which are our chunks.
+    # Due to this, we don't need to create chunks manually.
     # Retrieve new recipe documents with updated metadata
     updated_recipes = update_recipes_data(recipes)
 
@@ -35,7 +37,7 @@ def inference_stage(query, history):
     print(f"Splitted queries: {splitted_user_query}\n")
     print(f"Generated queries: {generated_queries}\n")
 
-    relevant_chunks = get_relevant_chunks(vector_db, generated_queries)
+    relevant_chunks = get_relevant_chunks(vector_db, query, generated_queries)
 
     return query_llm(query, relevant_chunks)
 
