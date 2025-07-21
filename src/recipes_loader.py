@@ -13,15 +13,3 @@ def load_recipes():
     documents = loader.load()
 
     return documents
-
-
-
-
-#################### KaggleHub Example ##########################
-#import kagglehub
-
-# Download latest version
-#path = kagglehub.dataset_download("crispen5gar/recipes3k")
-
-#print(f"Dataset downloaded to: {path}")
-##################################################################
