@@ -35,7 +35,7 @@ def add_documents_to_vector_db(vector_db, recipes):
     # This is where the embedding happens, the vectors are stored and there are associated costs
     vector_db.add_documents(recipes)
 
-    print(f"Vector DB: {vector_db}")
+    print(f"✅ Vector DB created.")
 
 # Retrieve relevant chunks based on user query
 def get_relevant_chunks(vector_db, original_user_query, generated_queries, top_k=3):

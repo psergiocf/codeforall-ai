@@ -45,4 +45,5 @@ def inference_stage(query, history):
 # Load the recipes and prepare RAG with the required chunks
 ingestion_stage()
 
+# Occurs when the user interacts with the Gradio interface
 gr.ChatInterface(inference_stage, type="messages").launch(debug=True)
